@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS," />
 
 
 
@@ -86,15 +86,31 @@
 
 
 
-<meta name="description" content="心魔，一辈子的敌人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Alan_Sim">
-<meta property="og:url" content="alanshen0118.github.io/index.html">
+<meta name="description" content="文章地址
+笔记： OC类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针
+objc_class结构体中重要的字段： 
+
+
+isa:是一个Class 类型的指针. 每个实例对象有个isa的指针,他指向对象的类，而Class里也有个isa的指针, 指向meteClass(元类)。元类保存了类方法的列表。当类方法被调用时，先会从本身查找类方法的实现，如果没有，元类会向他父类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objective-C运行时的一些黑魔法-类与对象">
+<meta property="og:url" content="alanshen0118.github.io/2016/06/14/Objective-C运行时的一些黑魔法-类与对象/index.html">
 <meta property="og:site_name" content="Alan_Sim">
-<meta property="og:description" content="心魔，一辈子的敌人">
+<meta property="og:description" content="文章地址
+笔记： OC类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针
+objc_class结构体中重要的字段： 
+
+
+isa:是一个Class 类型的指针. 每个实例对象有个isa的指针,他指向对象的类，而Class里也有个isa的指针, 指向meteClass(元类)。元类保存了类方法的列表。当类方法被调用时，先会从本身查找类方法的实现，如果没有，元类会向他父类">
+<meta property="og:updated_time" content="2016-06-15T03:18:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Alan_Sim">
-<meta name="twitter:description" content="心魔，一辈子的敌人">
+<meta name="twitter:title" content="Objective-C运行时的一些黑魔法-类与对象">
+<meta name="twitter:description" content="文章地址
+笔记： OC类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针
+objc_class结构体中重要的字段： 
+
+
+isa:是一个Class 类型的指针. 每个实例对象有个isa的指针,他指向对象的类，而Class里也有个isa的指针, 指向meteClass(元类)。元类保存了类方法的列表。当类方法被调用时，先会从本身查找类方法的实现，如果没有，元类会向他父类">
 
 
 
@@ -115,9 +131,9 @@
 
 
 
-  <link rel="canonical" href="alanshen0118.github.io/"/>
+  <link rel="canonical" href="alanshen0118.github.io/2016/06/14/Objective-C运行时的一些黑魔法-类与对象/"/>
 
-  <title> Alan_Sim </title>
+  <title> Objective-C运行时的一些黑魔法-类与对象 | Alan_Sim </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -138,9 +154,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -256,9 +270,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -278,10 +292,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/06/14/Objective-C运行时的一些黑魔法-类与对象/" itemprop="url">
-                  Objective-C运行时的一些黑魔法-类与对象
-                </a>
+                Objective-C运行时的一些黑魔法-类与对象
               
             
           </h1>
@@ -356,9 +367,7 @@
       
 
       
-        
-          
-            <p><a href="http://southpeak.github.io/blog/2014/10/25/objective-c-runtime-yun-xing-shi-zhi-lei-yu-dui-xiang/" target="_blank" rel="external">文章地址</a></p>
+        <p><a href="http://southpeak.github.io/blog/2014/10/25/objective-c-runtime-yun-xing-shi-zhi-lei-yu-dui-xiang/" target="_blank" rel="external">文章地址</a></p>
 <p></p><h1 style="text-align:left">笔记： </h1><br>OC类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针<p></p>
 <h2 style="text-align:left">objc_class结构体中重要的字段： </h2>
 
@@ -390,356 +399,93 @@
 <p></p><h3 style="text-align:left">获取类定义： </h3><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int numClasses;</span><br><span class="line">Class * classes = NULL;</span><br><span class="line"> </span><br><span class="line">numClasses = objc_getClassList(NULL, 0);</span><br><span class="line">if (numClasses &gt; 0) &#123;</span><br><span class="line">    classes = malloc(sizeof(Class) * numClasses);</span><br><span class="line">    numClasses = objc_getClassList(classes, numClasses);</span><br><span class="line"> </span><br><span class="line">    NSLog(@&quot;number of classes: %d&quot;, numClasses);</span><br><span class="line"> </span><br><span class="line">    for (int i = 0; i &lt; numClasses; i++) &#123;</span><br><span class="line"> </span><br><span class="line">        Class cls = classes[i];</span><br><span class="line">        NSLog(@&quot;class name: %s&quot;, class_getName(cls));</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    free(classes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
 <p></p><h1 style="text-align:left">方法汇总： </h1><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">// 获取类的类名</span><br><span class="line">const char * class_getName ( Class cls );</span><br><span class="line"></span><br><span class="line">// 获取类的父类</span><br><span class="line">Class class_getSuperclass ( Class cls );</span><br><span class="line"> </span><br><span class="line">// 判断给定的Class是否是一个元类</span><br><span class="line">BOOL class_isMetaClass ( Class cls );</span><br><span class="line"></span><br><span class="line">// 获取实例大小</span><br><span class="line">size_t class_getInstanceSize ( Class cls );</span><br><span class="line">// 获取类中指定名称实例成员变量的信息</span><br><span class="line">Ivar class_getInstanceVariable ( Class cls, const char *name );</span><br><span class="line"> </span><br><span class="line">// 获取类成员变量的信息</span><br><span class="line">Ivar class_getClassVariable ( Class cls, const char *name );</span><br><span class="line"> </span><br><span class="line">// 添加成员变量</span><br><span class="line">BOOL class_addIvar ( Class cls, const char *name, size_t size, uint8_t alignment, const char *types );</span><br><span class="line"> </span><br><span class="line">// 获取整个成员变量列表</span><br><span class="line">Ivar * class_copyIvarList ( Class cls, unsigned int *outCount );</span><br><span class="line"></span><br><span class="line">// 获取指定的属性</span><br><span class="line">objc_property_t class_getProperty ( Class cls, const char *name );</span><br><span class="line"> </span><br><span class="line">// 获取属性列表</span><br><span class="line">objc_property_t * class_copyPropertyList ( Class cls, unsigned int *outCount );</span><br><span class="line"> </span><br><span class="line">// 为类添加属性</span><br><span class="line">BOOL class_addProperty ( Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount );</span><br><span class="line"> </span><br><span class="line">// 替换类的属性</span><br><span class="line">void class_replaceProperty ( Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount );</span><br><span class="line"></span><br><span class="line">//垃圾回收器扫描</span><br><span class="line">const uint8_t * class_getIvarLayout ( Class cls );</span><br><span class="line"></span><br><span class="line">void class_setIvarLayout ( Class cls, const uint8_t *layout );</span><br><span class="line"></span><br><span class="line">const uint8_t * class_getWeakIvarLayout ( Class cls );</span><br><span class="line"></span><br><span class="line">void class_setWeakIvarLayout ( Class cls, const uint8_t *layout );</span><br><span class="line"></span><br><span class="line">// 添加方法</span><br><span class="line">BOOL class_addMethod ( Class cls, SEL name, IMP imp, const char *types );</span><br><span class="line"> </span><br><span class="line">// 获取实例方法</span><br><span class="line">Method class_getInstanceMethod ( Class cls, SEL name );</span><br><span class="line"> </span><br><span class="line">// 获取类方法</span><br><span class="line">Method class_getClassMethod ( Class cls, SEL name );</span><br><span class="line"> </span><br><span class="line">// 获取所有方法的数组</span><br><span class="line">Method * class_copyMethodList ( Class cls, unsigned int *outCount );</span><br><span class="line"> </span><br><span class="line">// 替代方法的实现</span><br><span class="line">IMP class_replaceMethod ( Class cls, SEL name, IMP imp, const char *types );</span><br><span class="line"> </span><br><span class="line">// 返回方法的具体实现</span><br><span class="line">IMP class_getMethodImplementation ( Class cls, SEL name );</span><br><span class="line">IMP class_getMethodImplementation_stret ( Class cls, SEL name );</span><br><span class="line"> </span><br><span class="line">// 类实例是否响应指定的selector</span><br><span class="line">BOOL class_respondsToSelector ( Class cls, SEL sel );</span><br><span class="line"></span><br><span class="line">// 添加协议</span><br><span class="line">BOOL class_addProtocol ( Class cls, Protocol *protocol );</span><br><span class="line"> </span><br><span class="line">// 返回类是否实现指定的协议</span><br><span class="line">BOOL class_conformsToProtocol ( Class cls, Protocol *protocol );</span><br><span class="line"> </span><br><span class="line">// 返回类实现的协议列表</span><br><span class="line">Protocol * class_copyProtocolList ( Class cls, unsigned int *outCount );</span><br><span class="line"></span><br><span class="line">// 获取版本号</span><br><span class="line">int class_getVersion ( Class cls );</span><br><span class="line"> </span><br><span class="line">// 设置版本号</span><br><span class="line">void class_setVersion ( Class cls, int version );</span><br><span class="line"></span><br><span class="line">// 创建一个新类和元类</span><br><span class="line">Class objc_allocateClassPair ( Class superclass, const char *name, size_t extraBytes );</span><br><span class="line"> </span><br><span class="line">// 销毁一个类及其相关联的类</span><br><span class="line">void objc_disposeClassPair ( Class cls );</span><br><span class="line"> </span><br><span class="line">// 在应用中注册由objc_allocateClassPair创建的类</span><br><span class="line">void objc_registerClassPair ( Class cls );</span><br><span class="line"></span><br><span class="line">// 创建类实例</span><br><span class="line">id class_createInstance ( Class cls, size_t extraBytes );</span><br><span class="line"> </span><br><span class="line">// 在指定位置创建类实例</span><br><span class="line">id objc_constructInstance ( Class cls, void *bytes );</span><br><span class="line"> </span><br><span class="line">// 销毁类实例</span><br><span class="line">void * objc_destructInstance ( id obj );</span><br><span class="line"></span><br><span class="line">// 返回指定对象的一份拷贝</span><br><span class="line">id object_copy ( id obj, size_t size );</span><br><span class="line"> </span><br><span class="line">// 释放指定对象占用的内存</span><br><span class="line">id object_dispose ( id obj );</span><br><span class="line"></span><br><span class="line">// 修改类实例的实例变量的值</span><br><span class="line">Ivar object_setInstanceVariable ( id obj, const char *name, void *value );</span><br><span class="line"> </span><br><span class="line">// 获取对象实例变量的值</span><br><span class="line">Ivar object_getInstanceVariable ( id obj, const char *name, void **outValue );</span><br><span class="line"> </span><br><span class="line">// 返回指向给定对象分配的任何额外字节的指针</span><br><span class="line">void * object_getIndexedIvars ( id obj );</span><br><span class="line"> </span><br><span class="line">// 返回对象中实例变量的值</span><br><span class="line">id object_getIvar ( id obj, Ivar ivar );</span><br><span class="line"> </span><br><span class="line">// 设置对象中实例变量的值</span><br><span class="line">void object_setIvar ( id obj, Ivar ivar, id value );</span><br><span class="line"></span><br><span class="line">// 返回给定对象的类名</span><br><span class="line">const char * object_getClassName ( id obj );</span><br><span class="line"> </span><br><span class="line">// 返回对象的类</span><br><span class="line">Class object_getClass ( id obj );</span><br><span class="line"> </span><br><span class="line">// 设置对象的类</span><br><span class="line">Class object_setClass ( id obj, Class cls );</span><br><span class="line"></span><br><span class="line">// 获取已注册的类定义的列表</span><br><span class="line">int objc_getClassList ( Class *buffer, int bufferCount );</span><br><span class="line"> </span><br><span class="line">// 创建并返回一个指向所有已注册类的指针列表</span><br><span class="line">Class * objc_copyClassList ( unsigned int *outCount );</span><br><span class="line"> </span><br><span class="line">// 返回指定类的类定义</span><br><span class="line">Class objc_lookUpClass ( const char *name );</span><br><span class="line">Class objc_getClass ( const char *name );</span><br><span class="line">Class objc_getRequiredClass ( const char *name );</span><br><span class="line"> </span><br><span class="line">// 返回指定类的元类</span><br><span class="line">Class objc_getMetaClass ( const char *name );</span><br></pre></td></tr></table></figure><p></p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/qrcode.png" alt="Alan_Sim Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
     </div>
+  </div>
 
-    <div>
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/14/Objective-C运行时的一些黑魔法/" itemprop="url">
-                  Objective-C运行时的一些黑魔法-Method Swizzling
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-14T14:30:29+08:00" content="2016-06-14">
-              2016-06-14
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/”iOS”/" itemprop="url" rel="index">
-                    <span itemprop="name">”iOS”</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/14/Objective-C运行时的一些黑魔法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/14/Objective-C运行时的一些黑魔法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/06/14/Objective-C运行时的一些黑魔法/" class="leancloud_visitors" data-flag-title="Objective-C运行时的一些黑魔法-Method Swizzling">
-               &nbsp &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 style="text-align:left">Method swizzling </h1>
-
-<p>Method swizzling指的是改变一个已存在的选择器对应的实现的过程，它依赖于Objectvie-C中方法的调用能够在运行时进改变——通过改变类的调度表（dispatch table）中选择器到最终函数间的映射关系。</p>
-<p>举个例子，假设我们想跟踪在一个iOS应用中每个视图控制器展现给用户的次数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"> </span><br><span class="line">@implementation UIViewController (Tracking)</span><br><span class="line"> </span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        Class class = [self class];</span><br><span class="line">        </span><br><span class="line">        SEL originalSelector = @selector(viewWillAppear:);</span><br><span class="line">        SEL swizzledSelector = @selector(xxx_viewWillAppear:);</span><br><span class="line">        Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line">         </span><br><span class="line">        BOOL didAddMethod = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));</span><br><span class="line">         </span><br><span class="line">        if (didAddMethod) &#123;</span><br><span class="line">            class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">#pragma mark - Method Swizzling</span><br><span class="line"> </span><br><span class="line">- (void)xxx_viewWillAppear:(BOOL)animated &#123;</span><br><span class="line">    [self xxx_viewWillAppear:animated];</span><br><span class="line">    NSLog(@&quot;viewWillAppear: %@&quot;, self);</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>在计算机学科中，指针变换（pointer swizzling）是指将基于名字或位置的引用转变为直接的指针引用。 然而在Objective-C中，这个词的起源并不完全知道，但关于这一借鉴其实也很好理解，method swizzling可以通过选择器来改变它引用的函数指针。</p>
-<p>向视图控制器的生命周期中注入操作、事件的响应、视图的绘制，或Foundation中的网络堆栈都是能够利用method swizzling产生明显效果的场景。还有一些其他的场景使用swizzling会是一个合适的选择，这随着Objective-C开发者经验不断丰富会变得越来越明显。</p>
-<p>先不说为什么和在哪些地方使用swizzling，来看一下应该怎样实现：</p>
-<p></p><h2 style="text-align:left">+load vs. +initialize </h2><br>Swizzling应该在+load方法中实现。<br>每个类的这两个方法会被Objective-C运行时系统自动调用，+load是在一个类最开始加载时调用，+initialize是在应用中第一次调用该类或它的实例的方式之前调用。这两个方法都是可选的，只有实现了才会被执行。<p></p>
-<p>因为method swizzling会影响全局，所以减少冒险情况就很重要。+load能够保证在类初始化的时候就会被加载，这为改变系统行为提供了一些统一性。但+initialize并不能保证在什么时候被调用——事实上也有可能永远也不会被调用，例如应用程序从未直接的给该类发送消息。</p>
-<p></p><h2 style="text-align:left">dispatch_once </h2><br>Swizzling应该在dispatch_once中实现。<p></p>
-<p>还是因为swizzling会改变全局，我们需要在运行时采取所有可用的防范措施。保障原子性就是一个措施，它确保代码即使在多线程环境下也只会被执行一次。GCD中的diapatch_once就提供这些保障，它应该被当做swizzling的标准实践。</p>
-<p></p><h2 style="text-align:left">选择器、方法及实现 </h2><br>在Objective-C中，尽管这些词经常被放在一起来描述消息传递的过程，但选择器、方法及实现分别代表运行时的不同方面。<p></p>
-<p>下面是苹果Objective-C Runtime Reference文档中对它们的描述：</p>
-<ul>
-<li><p>选择器（typedef struct objc_selector *SEL）：选择器用于表示一个方法在运行时的名字，一个方法的选择器是一个注册到（或映射到）Objective-C运行时中的C字符串，它是由编译器生成并在类加载的时候被运行时系统自动映射。</p>
-</li>
-<li><p>方法（typedef struct objc_method *Method）：一个代表类定义中一个方法的不明类型。</p>
-</li>
-<li><p>实现（typedef id (*IMP)(id, SEL, …)）：这种数据类型是实现某个方法的函数开始位置的指针，函数使用的是基于当前CPU架构的标准C调用规约。第一个参数是指向self的指针（也就是该类的某个实例的内存空间，或者对于类方法来说，是指向元类（metaclass）的指针）。第二个参数是方法的选择器，后面跟的都是参数。</p>
-</li>
-</ul>
-<p>理解这些概念之间关系最好的方式是：一个类（Class）维护一张调度表（dispatch table）用于解析运行时发送的消息；调度表中的每个实体（entry）都是一个方法（Method），其中key值是一个唯一的名字——选择器（SEL），它对应到一个实现（IMP）——实际上就是指向标准C函数的指针。</p>
-<p>Method Swizzling就是改变类的调度表让消息解析时从一个选择器对应到另外一个的实现，同时将原始的方法实现混淆到一个新的选择器。</p>
-<p></p><h2 style="text-align:left">调用_cmd </h2><br>下面这段代码看起来像是会导致一个死循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)xxx_viewWillAppear:(BOOL)animated &#123; </span><br><span class="line">    [self xxx_viewWillAppear:animated]; </span><br><span class="line">    NSLog(@&quot;viewWillAppear: %@&quot;, NSStringFromClass([self class])); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
-<p>但其实并没有，在Swizzling的过程中，xxx_viewWillAppear:会被重新分配给UIViewController的-viewWillAppear:的原始实现。一个优秀程序员应有的直觉会告诉你在一个方法的实现中通过self调用当前方法自身会产生错误，但是在当前这种情况下，如果我们记住到底是怎么回事更有意义。反而，如果我们在这个方法中调用viewWillAppear:才会真的导致死循环，因为这个方法的实现会在运行时被swizzle到viewWillAppear:的选择器。</p>
-<p>记住给swizzled方法加上前缀，这和你需要给可能产生冲突的分类方法加前缀是一个道理。</p>
-<p></p><h2 style="text-align:left">注意事项 </h2><br>Swizzling被普遍认为是一种巫术，容易导致不可预料的行为和结果。尽管不是最安全的，但是如果你采取下面这些措施，method swizzling还是很安全的。<p></p>
-<ul>
-<li><p>始终调用方法的原始实现（除非你有足够的理由不这么做）： API为输入和输出提供规约，但它里面具体的实现其实是个黑匣子，在Method Swizzling过程中不调用它原始的实现可能会破坏一些私有状态，甚至是程序的其他部分。</p>
-</li>
-<li><p>避免冲突：给分类方法加前缀，一定要确保不要让你代码库中其他代码（或是依赖库）在做与你相同的事。</p>
-</li>
-<li><p>理解：只是简单的复制粘贴swizzling代码而不去理解它是怎么运行的，这不仅非常危险，而且还浪费了学习Objective-C运行时的机会。阅读 <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ObjCRuntimeRef/Reference/reference.html#//apple_ref/c/func/method_getImplementation" target="_blank" rel="external">Objective-C Runtime Reference</a> 和 <objc rumtime.h=""> 去理解代码是怎样和为什么这样执行的，努力的用你的理解来消灭你的疑惑。</objc></p>
-</li>
-</ul>
-<p>谨慎行事：不管你多么自信你能够swizzling Foundation、UIKit 或者其他内置框架，请记住所有这些都可能在下一个版本中就不好使。提前做好准备，防范于未然才不至于到时候焦头烂额。</p>
-<p>不敢放心大胆的直接使用Objective-C运行时？<a href="https://twitter.com/rentzsch" target="_blank" rel="external">Jonathan ‘Wolf’ Rentzsch</a>提供了经过实战检验的、支持CocoaPads的库<a href="https://github.com/rentzsch/jrswizzle" target="_blank" rel="external">JRSwizzle</a>，它会为你考虑好了一切。</p>
-<p>与associated objects一样，method swizzling是一个强大的技术，但是你也应该谨慎使用。</p>
-<p>本文参考<a href="http://nshipster.com/" target="_blank" rel="external">NSHipster</a>的文章<a href="http://nshipster.com/method-swizzling/" target="_blank" rel="external">Method Swizzling</a></p>
-<hr>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/06/14/Objective-C运行时的一些黑魔法/" rel="next" title="Objective-C运行时的一些黑魔法-Method Swizzling">
+                <i class="fa fa-chevron-left"></i> Objective-C运行时的一些黑魔法-Method Swizzling
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/06/01/iOS加解密编解码/" itemprop="url">
-                  关于iOS加解密编解码那些事
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-01T23:47:44+08:00" content="2016-06-01">
-              2016-06-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/“iOS”/" itemprop="url" rel="index">
-                    <span itemprop="name">“iOS”</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/01/iOS加解密编解码/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/01/iOS加解密编解码/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/06/01/iOS加解密编解码/" class="leancloud_visitors" data-flag-title="关于iOS加解密编解码那些事">
-               &nbsp &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p></p><h1 style="text-align:left">编解码 </h1><p></p>
-<p></p><h3 style="text-align:left">base64编解码 </h3><br>Base64是网络上最常见的用于传输8Bit字节代码的编码方式之一。Base64编码可用于在HTTP环境下传递较长的标识信息。在应用程序中，也常常需要把二进制数据编码为适合放在URL（包括隐藏表单域）中的形式。此时，采用Base64编码具有不可读性，即所编码的数据不会被人用肉眼所直接看到。<br>推荐<a href="https://github.com/alanshen0118/GTMBase64.git" target="_blank" rel="external">GTMBase64</a><p></p>
-<p><hr></p>
-<p></p><h1 style="text-align:left">加解密 </h1><p></p>
-<p></p><h3 style="text-align:left">MD5数字摘要</h3><br>MD5即Message-Digest Algorithm 5（信息-摘要算法5），用于确保信息传输完整一致。是计算机广泛使用的杂凑算法之一（又译摘要算法、哈希算法），主流编程语言普遍已有MD5实现。将数据（如汉字）运算为另一固定长度值，是杂凑算法的基础原理，MD5的前身有MD2、MD3和MD4。<br>MD5算法具有以下特点：<br>1、压缩性：任意长度的数据，算出的MD5值长度都是固定的。<br>2、容易计算：从原数据计算出MD5值很容易。<br>3、抗修改性：对原数据进行任何改动，哪怕只修改1个字节，所得到的MD5值都有很大区别。<br>4、强抗碰撞：已知原数据和其MD5值，想找到一个具有相同MD5值的数据（即伪造数据）是非常困难的。<br>MD5的作用是让大容量信息在用数字签名软件签署私人密钥前被”压缩”成一种保密的格式（就是把一个任意长度的字节串变换成一定长的十六进制数字串）。除了MD5以外，其中比较有名的还有sha-1、RIPEMD以及Haval等。<p></p>
-<p></p><h4 style="text-align:left">基本原理 </h4><br>对MD5算法简要的叙述可以为：MD5以512位分组来处理输入的信息，且每一分组又被划分为16个32位子分组，经过了一系列的处理后，算法的输出由四个32位分组组成，将这四个32位分组级联后将生成一个128位散列值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (NSString *)md5 &#123;</span><br><span class="line"></span><br><span class="line">const char *cStr = [self UTF8String];</span><br><span class="line">unsigned char result[16];</span><br><span class="line">CC_MD5( cStr, strlen(cStr), result );</span><br><span class="line">return [NSString stringWithFormat:@%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X,</span><br><span class="line">result[0], result[1], result[2], result[3],</span><br><span class="line">result[4], result[5], result[6], result[7],</span><br><span class="line">result[8], result[9], result[10], result[11],</span><br><span class="line">result[12], result[13], result[14], result[15]</span><br><span class="line">];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
-<p><hr></p>
-<p></p><h3 style="text-align:left">SHA1摘要 </h3><br>安全哈希算法（Secure Hash Algorithm）主要适用于数字签名标准 （Digital Signature Standard DSS）里面定义的数字签名算法（Digital Signature Algorithm DSA）。对于长度小于2^64 位的消息，SHA1会产生一个160位的消息摘要。当接收到消息的时候，这个消息摘要可以用来验证数据的完整性。在传输的过程中，数据很可能会发生变化，那么这时候就会产生不同的消息摘要。 SHA1有如下特性：不可以从消息摘要中复原信息；两个不同的消息不会产生同样的消息摘要,(但会有1x10 ^ 48分之一的机率出现相同的消息摘要,一般使用时忽略)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- (NSString*) sha1</span><br><span class="line">&#123;</span><br><span class="line">    const char *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">    NSData *data = [NSData dataWithBytes:cstr length:self.length];</span><br><span class="line">  </span><br><span class="line">    uint8_t digest[CC_SHA1_DIGEST_LENGTH];</span><br><span class="line">  </span><br><span class="line">    CC_SHA1(data.bytes, data.length, digest);</span><br><span class="line">  </span><br><span class="line">    NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];</span><br><span class="line">  </span><br><span class="line">    for(int i = 0; i &lt; CC_SHA1_DIGEST_LENGTH; i++)</span><br><span class="line">        [output appendFormat:@%02x, digest[i]];</span><br><span class="line">  </span><br><span class="line">    return output;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
-<p><hr></p>
-<p></p><h3 style="text-align:left">SHA1与base64结合 </h3><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (NSString *) sha1_base64</span><br><span class="line">&#123;</span><br><span class="line">    const char *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">    NSData *data = [NSData dataWithBytes:cstr length:self.length];</span><br><span class="line">  </span><br><span class="line">    uint8_t digest[CC_SHA1_DIGEST_LENGTH];</span><br><span class="line">  </span><br><span class="line">    CC_SHA1(data.bytes, data.length, digest);</span><br><span class="line">  </span><br><span class="line">    NSData * base64 = [[NSData alloc]initWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];</span><br><span class="line">    base64 = [GTMBase64 encodeData:base64];</span><br><span class="line">  </span><br><span class="line">    NSString * output = [[NSString alloc] initWithData:base64 encoding:NSUTF8StringEncoding];</span><br><span class="line">    return output;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
-<p><hr></p>
-<p></p><h3 style="text-align:left">MD5与base64结合 </h3><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (NSString *) md5_base64</span><br><span class="line">&#123;</span><br><span class="line">    const char *cStr = [self UTF8String];</span><br><span class="line">    unsigned char digest[CC_MD5_DIGEST_LENGTH];</span><br><span class="line">    CC_MD5( cStr, strlen(cStr), digest );</span><br><span class="line">  </span><br><span class="line">    NSData * base64 = [[NSData alloc]initWithBytes:digest length:CC_MD5_DIGEST_LENGTH];</span><br><span class="line">    base64 = [GTMBase64 encodeData:base64];</span><br><span class="line">  </span><br><span class="line">    NSString * output = [[NSString alloc] initWithData:base64 encoding:NSUTF8StringEncoding];</span><br><span class="line">    return output;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
-<p></p><h3 style="text-align:left">AES加解密 </h3><br>高级加密标准（英语：Advanced Encryption Standard，缩写：AES），在密码学中又称Rijndael加密法。这个标准用来替代原先的DES，已经被多方分析且广为全世界所使用。<br>推荐<a href="https://github.com/RNCryptor/RNCryptor" target="_blank" rel="external">RNCryptor</a><p></p>
-<p><hr></p>
-<p></p><h3 style="text-align:left">DES加解密 </h3><br>DES是一种分组数据加密技术（先将数据分成固定长度的小数据块，之后进行加密），速度较快，适用于大量数据加密<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">/*字符串加密</span><br><span class="line"> *参数</span><br><span class="line"> *plainText : 加密明文</span><br><span class="line"> *key        : 密钥 64位</span><br><span class="line"> */</span><br><span class="line">+ (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key</span><br><span class="line">&#123;</span><br><span class="line">    NSString *ciphertext = nil;</span><br><span class="line">    const char *textBytes = [plainText UTF8String];</span><br><span class="line">    NSUInteger dataLength = [plainText length];</span><br><span class="line">    unsigned char buffer[1024];</span><br><span class="line">    memset(buffer, 0, sizeof(char));</span><br><span class="line">    Byte iv[] = &#123;1,2,3,4,5,6,7,8&#125;;</span><br><span class="line">    size_t numBytesEncrypted = 0;</span><br><span class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmDES,</span><br><span class="line">                                          kCCOptionPKCS7Padding,</span><br><span class="line">                                          [key UTF8String], kCCKeySizeDES,</span><br><span class="line">                                          iv,</span><br><span class="line">                                          textBytes, dataLength,</span><br><span class="line">                                          buffer, 1024,</span><br><span class="line">                                          &amp;numBytesEncrypted);</span><br><span class="line">    if (cryptStatus == kCCSuccess) &#123;</span><br><span class="line">        NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];</span><br><span class="line">        </span><br><span class="line">        ciphertext = [[[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding] autorelease];</span><br><span class="line">    &#125;</span><br><span class="line">    return ciphertext;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">//解密</span><br><span class="line">+ (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key </span><br><span class="line">&#123;</span><br><span class="line">    NSData* cipherData = [GTMBase64 decodeString:cipherText];</span><br><span class="line">    unsigned char buffer[1024];</span><br><span class="line">    memset(buffer, 0, sizeof(char));</span><br><span class="line">    size_t numBytesDecrypted = 0;</span><br><span class="line">    Byte iv[] = &#123;1,2,3,4,5,6,7,8&#125;;</span><br><span class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, </span><br><span class="line">                                          kCCAlgorithmDES, </span><br><span class="line">                                          kCCOptionPKCS7Padding, </span><br><span class="line">                                          [key UTF8String], </span><br><span class="line">                                          kCCKeySizeDES, </span><br><span class="line">                                          iv, </span><br><span class="line">                                          [cipherData bytes], </span><br><span class="line">                                          [cipherData length], </span><br><span class="line">                                          buffer, </span><br><span class="line">                                          1024, </span><br><span class="line">                                          &amp;numBytesDecrypted);</span><br><span class="line">    NSString* plainText = nil;</span><br><span class="line">    if (cryptStatus == kCCSuccess) &#123;</span><br><span class="line">        NSData* data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesDecrypted];</span><br><span class="line">        plainText = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];</span><br><span class="line">    &#125;</span><br><span class="line">    return plainText;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
-<p><hr></p>
-<p></p><h3 style="text-align:left">3DES加解密 </h3><br>3DES是一种基于DES的加密算法，使用3个不同密匙对同一个分组数据块进行3次加密，如此以使得密文强度更高。<br>相较于DES和3DES算法而言，AES算法有着更高的速度和资源使用效率，安全级别也较之更高了，被称为下一代加密标准。<br>相对于DES，新增核心代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">//前端与后台商量KEY</span><br><span class="line">#define gkey            @&quot;&quot;</span><br><span class="line">#define gIv             @&quot;&quot;</span><br><span class="line"></span><br><span class="line">+ (NSString*)TripleDES:(NSString*)plainText encryptOrDecrypt:(CCOperation)encryptOrDecrypt key:(NSString*)key &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    const void *vplainText;</span><br><span class="line">    size_t plainTextBufferSize;</span><br><span class="line"></span><br><span class="line">    if (encryptOrDecrypt == kCCDecrypt)</span><br><span class="line">    &#123;</span><br><span class="line">        NSData *EncryptData = [GTMBase64 decodeData:[plainText dataUsingEncoding:NSUTF8StringEncoding]];</span><br><span class="line">        plainTextBufferSize = [EncryptData length];</span><br><span class="line">        vplainText = [EncryptData bytes];</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        NSData* data = [plainText dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">        plainTextBufferSize = [data length];</span><br><span class="line">        vplainText = (const void *)[data bytes];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CCCryptorStatus ccStatus;</span><br><span class="line">    uint8_t *bufferPtr = NULL;</span><br><span class="line">    size_t bufferPtrSize = 0;</span><br><span class="line">    size_t movedBytes = 0;</span><br><span class="line">    // uint8_t ivkCCBlockSize3DES;</span><br><span class="line"></span><br><span class="line">    bufferPtrSize = (plainTextBufferSize + kCCBlockSize3DES) &amp; ~(kCCBlockSize3DES - 1);</span><br><span class="line">    bufferPtr = malloc( bufferPtrSize * sizeof(uint8_t));</span><br><span class="line">    memset((void *)bufferPtr, 0x0, bufferPtrSize);</span><br><span class="line">    // memset((void *) iv, 0x0, (size_t) sizeof(iv));</span><br><span class="line"></span><br><span class="line">    NSString *initVec = @&quot;&quot;;</span><br><span class="line">    const void *vkey = (const void *) [key UTF8String];</span><br><span class="line">    const void *vinitVec = (const void *) [initVec UTF8String];</span><br><span class="line"></span><br><span class="line">    ccStatus = CCCrypt(encryptOrDecrypt,</span><br><span class="line">                       kCCAlgorithm3DES,</span><br><span class="line">                       kCCOptionPKCS7Padding|kCCOptionECBMode,</span><br><span class="line">                       vkey, //key</span><br><span class="line">                       kCCKeySize3DES,</span><br><span class="line">                       vinitVec, //&quot;init Vec&quot;, //iv,</span><br><span class="line">                       vplainText, //&quot;Your Name&quot;, //plainText,</span><br><span class="line">                       plainTextBufferSize,</span><br><span class="line">                       (void *)bufferPtr,</span><br><span class="line">                       bufferPtrSize,</span><br><span class="line">                       &amp;movedBytes);</span><br><span class="line">    NSString *result;</span><br><span class="line"></span><br><span class="line">    if (encryptOrDecrypt == kCCDecrypt)</span><br><span class="line">    &#123;</span><br><span class="line">        result = [[NSString alloc] initWithData:[NSData dataWithBytes:(const void *)bufferPtr</span><br><span class="line">                                                                length:(NSUInteger)movedBytes]</span><br><span class="line">                                        encoding:NSUTF8StringEncoding];</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        NSData *myData = [NSData dataWithBytes:(const void *)bufferPtr length:(NSUInteger)movedBytes];</span><br><span class="line">        result = [GTMBase64 stringByEncodingData:myData];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return result;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
-<p><hr></p>
-<p></p><h3 style="text-align:left">RSA加密 </h3><br>RSA算法是一种非对称加密算法,常被用于加密数据传输.如果配合上数字摘要算法, 也可以用于文件签名.<p></p>
-<p></p><h4 style="text-align:left">基本原理 </h4><br>RSA使用”秘匙对”对数据进行加密解密.在加密解密数据前,需要先生成公钥(public key)和私钥(private key). <p></p>
-<ul>
-<li>公钥(public key):用于加密数据. 用于公开, 一般存放在数据提供方, 例如iOS客户端.</li>
-<li>私钥(private key):用于解密数据.必须保密,私钥泄露会造成安全问题.<br>iOS中的Security.framework提供了对RSA算法的支持.这种方式需要对密匙对进行处理,根据public key生成证书,通过private key生成p12格式的密匙<br>除了Security.framework, 也可以将openssl库编译到iOS工程中, 这可以提供更灵活的使用方式.<br>推荐<a href="https://github.com/ideawu/Objective-C-RSA.git" target="_blank" rel="external">Objective-C-RSA</a><hr></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/14/Objective-C运行时的一些黑魔法-类与对象/"
+     data-title="Objective-C运行时的一些黑魔法-类与对象"
+     data-content=""
+     data-url="alanshen0118.github.io/2016/06/14/Objective-C运行时的一些黑魔法-类与对象/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
 
 
           </div>
@@ -747,6 +493,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/14/Objective-C运行时的一些黑魔法-类与对象/"
+           data-title="Objective-C运行时的一些黑魔法-类与对象" data-url="alanshen0118.github.io/2016/06/14/Objective-C运行时的一些黑魔法-类与对象/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -766,8 +520,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -867,6 +630,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">笔记： </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">objc_class结构体中重要的字段： </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">EXAMPLE: </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">动态创建类和对象 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.1.</span> <span class="nav-text">动态创建类： </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.2.</span> <span class="nav-text">动态创建对象： </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.3.</span> <span class="nav-text">实例操作函数： </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.4.</span> <span class="nav-text">获取类定义： </span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">方法汇总： </span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -970,6 +744,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
